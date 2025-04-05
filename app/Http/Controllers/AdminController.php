@@ -56,7 +56,7 @@ class AdminController extends Controller
         $this->validate($request,[
             'short_des'=>'required|string',
             'description'=>'required|string',
-            'photo'=>'required',
+            // 'photo'=>'required',
             'logo'=>'required',
             'address'=>'required|string',
             'email'=>'required|email',
@@ -67,12 +67,12 @@ class AdminController extends Controller
         $settings=Settings::first();
         // return $settings;
         $status=$settings->fill($data)->save();
-        if($status){
+        // if($status){
             request()->session()->flash('success','Setting successfully updated');
-        }
-        else{
-            request()->session()->flash('error','Please try again');
-        }
+        // }
+        // else{
+        //     request()->session()->flash('error','Please try again');
+        // }
         return redirect()->route('admin');
     }
 

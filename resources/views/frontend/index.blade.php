@@ -1,8 +1,9 @@
 @extends('frontend.layouts.master')
 @section('title','Ecommerce Laravel || HOME PAGE')
 @section('main-content')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
 <!-- Slider Area -->
-@if(count($banners)>0)
+{{-- @if(count($banners)>0)
     <section id="Gslider" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             @foreach($banners as $key=>$banner)
@@ -31,7 +32,51 @@
         <span class="sr-only">Next</span>
         </a>
     </section>
+@endif --}}
+@if(count($banners) > 0)
+<!-- slider section -->
+<section class="slider_section">
+  <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      @foreach($banners as $key => $banner)
+      <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="detail-box">
+                <h1>
+                  {{ $banner->title }}
+                </h1>
+                <p>
+                  {!! html_entity_decode($banner->description) !!}
+                </p>
+                <div class="btn-box">
+                  <a href="{{ route('product-grids') }}" class="btn1">
+                    Shop Now
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="img-box">
+                <img src="{{ $banner->photo }}" alt="{{ $banner->title }}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      @endforeach
+    </div>
+    <ol class="carousel-indicators">
+      @foreach($banners as $key => $banner)
+      <li data-target="#customCarousel1" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
+      @endforeach
+    </ol>
+  </div>
+</section>
+<!-- end slider section -->
 @endif
+
 
 <!--/ End Slider Area -->
 
@@ -301,7 +346,7 @@
 <!-- End Shop Home List  -->
 
 <!-- Start Shop Blog  -->
-<section class="shop-blog section">
+{{-- <section class="shop-blog section">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -330,7 +375,7 @@
 
         </div>
     </div>
-</section>
+</section> --}}
 <!-- End Shop Blog  -->
 
 <!-- Start Shop Services Area -->
@@ -378,7 +423,7 @@
 </section>
 <!-- End Shop Services Area -->
 
-@include('frontend.layouts.newsletter')
+{{-- @include('frontend.layouts.newsletter') --}}
 
 <!-- Modal -->
 @if($product_lists)

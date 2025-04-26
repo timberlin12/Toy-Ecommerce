@@ -4,6 +4,49 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Post
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string $summary
+ * @property string|null $description
+ * @property string|null $quote
+ * @property string|null $photo
+ * @property string|null $tags
+ * @property int|null $post_cat_id
+ * @property int|null $post_tag_id
+ * @property int|null $added_by
+ * @property string $status
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PostComment[] $allComments
+ * @property-read int|null $all_comments_count
+ * @property-read \App\User|null $author_info
+ * @property-read \App\Models\PostCategory|null $cat_info
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PostComment[] $comments
+ * @property-read int|null $comments_count
+ * @property-read \App\Models\PostTag|null $tag_info
+ * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereAddedBy($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post wherePhoto($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post wherePostCatId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post wherePostTagId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereQuote($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereSummary($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereTags($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Post extends Model
 {
     protected $fillable=['title','tags','summary','slug','description','photo','quote','post_cat_id','post_tag_id','added_by','status'];

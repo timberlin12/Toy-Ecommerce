@@ -33,20 +33,6 @@ class SocialiteManager extends Manager implements Contracts\Factory
      *
      * @return \Laravel\Socialite\Two\AbstractProvider
      */
-    protected function createGithubDriver()
-    {
-        $config = $this->app->make('config')['services.github'];
-
-        return $this->buildProvider(
-            GithubProvider::class, $config
-        );
-    }
-
-    /**
-     * Create an instance of the specified driver.
-     *
-     * @return \Laravel\Socialite\Two\AbstractProvider
-     */
     protected function createFacebookDriver()
     {
         $config = $this->app->make('config')['services.facebook'];
@@ -64,51 +50,8 @@ class SocialiteManager extends Manager implements Contracts\Factory
     protected function createGoogleDriver()
     {
         $config = $this->app->make('config')['services.google'];
-
-        return $this->buildProvider(
+        return  $this->buildProvider(
             GoogleProvider::class, $config
-        );
-    }
-
-    /**
-     * Create an instance of the specified driver.
-     *
-     * @return \Laravel\Socialite\Two\AbstractProvider
-     */
-    protected function createLinkedinDriver()
-    {
-        $config = $this->app->make('config')['services.linkedin'];
-
-        return $this->buildProvider(
-          LinkedInProvider::class, $config
-        );
-    }
-
-    /**
-     * Create an instance of the specified driver.
-     *
-     * @return \Laravel\Socialite\Two\AbstractProvider
-     */
-    protected function createBitbucketDriver()
-    {
-        $config = $this->app->make('config')['services.bitbucket'];
-
-        return $this->buildProvider(
-          BitbucketProvider::class, $config
-        );
-    }
-
-    /**
-     * Create an instance of the specified driver.
-     *
-     * @return \Laravel\Socialite\Two\AbstractProvider
-     */
-    protected function createGitlabDriver()
-    {
-        $config = $this->app->make('config')['services.gitlab'];
-
-        return $this->buildProvider(
-            GitlabProvider::class, $config
         );
     }
 
@@ -125,20 +68,6 @@ class SocialiteManager extends Manager implements Contracts\Factory
             $this->app->make('request'), $config['client_id'],
             $config['client_secret'], $this->formatRedirectUrl($config),
             Arr::get($config, 'guzzle', [])
-        );
-    }
-
-    /**
-     * Create an instance of the specified driver.
-     *
-     * @return \Laravel\Socialite\One\AbstractProvider
-     */
-    protected function createTwitterDriver()
-    {
-        $config = $this->app->make('config')['services.twitter'];
-
-        return new TwitterProvider(
-            $this->app->make('request'), new TwitterServer($this->formatConfig($config))
         );
     }
 

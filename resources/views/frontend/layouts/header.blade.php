@@ -205,21 +205,21 @@
                                             <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Contact Us</a></li>
                                             @auth 
                                             @if(Auth::user()->role=='admin')
-                                            <li>
+                                            {{-- <li>
                                                 <a href="javascript:void(0);">My Account<i class="ti-angle-down"></i></a>
-                                                <ul class="dropdown border-0 shadow">
+                                                <ul class="dropdown border-0 shadow"> --}}
                                                     <li> <a href="{{route('admin')}}"  target="_blank">Dashboard</a></li>
-                                                    <li> <a href="{{route('order.track')}}">Track Order</a></li>
+                                                    {{-- <li> <a href="{{route('order.track')}}">Track Order</a></li>
                                                 </ul>
-                                            </li>
+                                            </li> --}}
                                             @else 
-                                            <li>
+                                            {{-- <li>
                                                 <a href="javascript:void(0);">My Account<i class="ti-angle-down"></i></a>
-                                                <ul class="dropdown border-0 shadow">
+                                                <ul class="dropdown border-0 shadow"> --}}
                                                     <li> <a href="{{route('user')}}"  target="_blank">Dashboard</a></li>
-                                                    <li> <a href="{{route('order.track')}}">Track Order</a></li>
+                                                    {{-- <li> <a href="{{route('order.track')}}">Track Order</a></li>
                                                 </ul>
-                                            </li>
+                                            </li> --}}
                                             @endif
                                             <li> <a href="{{route('user.logout')}}">Logout</a></li>
             

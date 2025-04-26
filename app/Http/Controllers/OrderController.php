@@ -249,8 +249,8 @@ class OrderController extends Controller
     }
 
     public function productTrackOrder(Request $request){
-        // return $request->all();
         $order=Order::where('user_id',auth()->user()->id)->where('order_number',$request->order_number)->first();
+        // dd($order);
         if($order){
             if($order->status=="new"){
             request()->session()->flash('success','Your order has been placed.');

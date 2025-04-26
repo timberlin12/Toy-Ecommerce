@@ -22,7 +22,7 @@ class CartController extends Controller
             return back();
         }        
         $product = Product::where('slug', $request->slug)->first();
-        return $product;
+        // return $product;
         if (empty($product)) {
             request()->session()->flash('error','Invalid Products');
             return back();

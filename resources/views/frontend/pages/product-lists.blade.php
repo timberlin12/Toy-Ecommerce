@@ -82,7 +82,7 @@
 											<button type="submit" class="filter_button">Filter</button>
 											<div class="label-input">
 												<span>Range:</span>
-												<input style="" type="text" id="amount" readonly/>
+												<input type="text" id="amount" readonly/>
 												<input type="hidden" name="price_range" id="price_range" value="@if(!empty($_GET['price'])){{$_GET['price']}}@endif"/>
 											</div>
 											</div>
@@ -119,7 +119,7 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>                                                
+                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del> <br>  ${{number_format($org,2)}}  </p>                                                
                                             </div>
                                         </div>
                                         <!-- End Single Post -->
@@ -375,10 +375,13 @@
         margin-top:10px;
         color: white;
     }
+	.quickview-content{
+		padding-bottom: 0px;
+	}
 </style>
 @endpush
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
 
     {{-- <script>
         $('.cart').click(function(){
@@ -443,6 +446,21 @@
                 "  -  "+m_currency + $("#slider-range").slider("values", 1));
             }
         })
+
+		$(document).ready(function() {
+			$('.modal').on('show.bs.modal', function () {
+				var $slider = $(this).find('.quickview-slider-active');
+
+				// Remove all owl-related classes
+				$slider.removeClass('owl-carousel owl-theme owl-loaded owl-loading');
+
+				// Remove owl internal structure and unwrap images
+				$slider.find('.owl-stage-outer, .owl-stage, .owl-item, .owl-wrapper-outer, .owl-wrapper').each(function(){
+					$(this).replaceWith($(this).html());
+				});
+			});
+			$('.owl-item.cloned').hide();
+		});
     </script>
 
 @endpush

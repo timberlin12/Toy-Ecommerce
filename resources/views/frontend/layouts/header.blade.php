@@ -195,7 +195,9 @@
                                             @php
                                                 $settings=DB::table('settings')->get();
                                             @endphp    
-                                            <a href="{{route('home')}}" style="width: 17%;padding-top: 0.7%;"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
+                                            {{-- <li> --}}
+                                                <a href="{{route('home')}}" style="width: 17%;padding-top: 0.7%;"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
+                                            {{-- </li> --}}
                                             <li class="{{Request::path()=='home' ? 'active' : ''}}"><a href="{{route('home')}}">Home</a></li>
                                             {{-- <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">About Us</a></li>  --}}
                                             <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Products</a><span class="new">New</span></li>												
@@ -222,13 +224,13 @@
                                             </li> --}}
                                             @endif
                                             <li> <a href="{{route('user.logout')}}">Logout</a></li>
-            
-                                        @else
-                                            <li>
-                                                <a href="{{route('login.form')}}">Login / Register</a> 
-                                                {{-- <a href="{{route('register.form')}}">Register</a> --}}
-                                            </li>
-                                        @endauth
+                                            @else
+                                                <li>
+                                                    <a href="{{route('login.form')}}">Login / Register</a> 
+                                                    {{-- <a href="{{route('register.form')}}">Register</a> --}}
+                                                </li>
+                                            @endauth
+                                            {{-- <li> --}}
                                                 <div class="right-bar">
                                                     <!-- Search Form -->
                                                     <div class="sinlge-bar shopping">
@@ -315,6 +317,7 @@
                                                         <!--/ End Shopping Item -->
                                                     </div>
                                                 </div>
+                                            {{-- </li> --}}
                                         </ul>
                                     </div>
                                 </div>

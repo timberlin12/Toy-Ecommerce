@@ -182,6 +182,23 @@
     </div> --}}
     <!-- Header Inner -->
     <div class="header-inner">
+        
+        {{-- <div class="sec-header">
+            <button style="margin-right: 20px; background: none; border: none;">
+                <i class="fas fa-bars" style="font-size: 60px; cursor: pointer; color: black;"></i>
+            </button>
+
+            @php $settings = DB::table('settings')->get(); @endphp
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <a href="{{ route('home') }}" class="white-image" style="padding: 10px 0;">
+                    <img src="@foreach($settings as $data) {{ $data->logo }} @endforeach" alt="logo" style="height: 80px;">
+                </a>
+                <a href="{{ route('home') }}" class="blue-image" style="padding: 10px 0; display: none;">
+                    <img src="http://127.0.0.1:8000/storage/photos/2/logohd2.jpg" alt="logo" style="height: 80px;">
+                </a>
+            </div>
+        </div> --}}
+
         <div class="container">
             <div class="cat-nav-head">
                 <div class="row">
@@ -191,13 +208,14 @@
                             <nav class="navbar navbar-expand-lg">
                                 <div class="navbar-collapse">	
                                     <div class="nav-inner">	
-                                        <ul class="nav main-menu menu navbar-nav">
+                                        <ul class="nav main-menu menu navbar-nav" style="justify-content: center;">
                                             @php
                                                 $settings=DB::table('settings')->get();
                                             @endphp    
-                                            {{-- <li> --}}
-                                                <a href="{{route('home')}}" style="width: 17%;padding-top: 0.7%;"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
-                                            {{-- </li> --}}
+                                            <li style="width: 20%;">
+                                                <a href="{{route('home')}}" style="padding-top: 10px;padding-bottom: 6px;" class="white-image"><img src="@foreach($settings as $data) {{$data->logo}} @endforeach" alt="logo"></a>
+                                                <a href="{{route('home')}}" style="padding-top: 15px;padding-bottom: 15px; display:none;" class="blue-image"><img src="http://127.0.0.1:8000/storage/photos/2/logohd2.jpg" alt="logo"></a>
+                                            </li>
                                             <li class="{{Request::path()=='home' ? 'active' : ''}}"><a href="{{route('home')}}">Home</a></li>
                                             {{-- <li class="{{Request::path()=='about-us' ? 'active' : ''}}"><a href="{{route('about-us')}}">About Us</a></li>  --}}
                                             <li class="@if(Request::path()=='product-grids'||Request::path()=='product-lists')  active  @endif"><a href="{{route('product-grids')}}">Products</a><span class="new">New</span></li>												
@@ -328,6 +346,10 @@
                 </div>
             </div>
         </div>
+
+
+        
+
     </div>
     <!--/ End Header Inner -->
 </header>

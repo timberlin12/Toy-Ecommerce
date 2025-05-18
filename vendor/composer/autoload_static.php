@@ -718,6 +718,7 @@ class ComposerStaticInit0fe02967618b6ee54572c79b43d09b09
         'Barryvdh\\LaravelIdeHelper\\Eloquent' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Eloquent.php',
         'Barryvdh\\LaravelIdeHelper\\Factories' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Factories.php',
         'Barryvdh\\LaravelIdeHelper\\Generator' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Generator.php',
+        'Barryvdh\\LaravelIdeHelper\\Helpers' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Helpers.php',
         'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/IdeHelperServiceProvider.php',
         'Barryvdh\\LaravelIdeHelper\\Macro' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Macro.php',
         'Barryvdh\\LaravelIdeHelper\\Method' => __DIR__ . '/..' . '/barryvdh/laravel-ide-helper/src/Method.php',

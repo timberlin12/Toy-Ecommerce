@@ -255,17 +255,14 @@
                                                                     <a href="{{route('wishlist')}}">View Wishlist</a>
                                                                 </div>
                                                                 <ul class="shopping-list">
-                                                                    {{-- {{Helper::getAllProductFromCart()}} --}}
+                                                                    {{-- @dd(Helper::getAllProductFromWishlist()); --}}
                                                                         @foreach(Helper::getAllProductFromWishlist() as $data)
-                                                                                @php
-                                                                                    $photo=explode(',',$data->product['photo']);
-                                                                                @endphp
-                                                                                <li>
-                                                                                    <a href="{{route('wishlist-delete',$data->id)}}" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                                                    <a class="cart-img" href="#"><img src="{{$photo[0]}}" alt="{{$photo[0]}}"></a>
-                                                                                    <h4 style="max-width: 59%;"><a href="{{route('product-detail',$data->product['slug'])}}" target="_blank" style="color: #17a2b8;">{{$data->product['title']}}</a></h4>
-                                                                                    <p class="quantity">{{$data->quantity}} x - <span class="amount">${{number_format($data->price,2)}}</span></p>
-                                                                                </li>
+                                                                            <li>
+                                                                                <a href="{{route('wishlist-delete',$data->id)}}" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                                                <a class="cart-img" href="#"><img src="{{ $data->product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $data->product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}"></a>
+                                                                                <h4 style="max-width: 59%;"><a href="{{route('product-detail',$data->product['slug'])}}" target="_blank" style="color: #17a2b8;">{{$data->product['title']}}</a></h4>
+                                                                                <p class="quantity">{{$data->quantity}} x - <span class="amount">${{number_format($data->price,2)}}</span></p>
+                                                                            </li>
                                                                         @endforeach
                                                                 </ul>
                                                                 <div class="bottom">
@@ -273,7 +270,7 @@
                                                                         <span>Total</span>
                                                                         <span class="total-amount">${{number_format(Helper::totalWishlistPrice(),2)}}</span>
                                                                     </div>
-                                                                    <a href="{{route('cart')}}" class="btn animate">Cart</a>
+                                                                    {{-- <a href="{{route('cart')}}" class="btn animate">Cart</a> --}}
                                                                 </div>
                                                             </div>
                                                         @endauth
@@ -294,15 +291,12 @@
                                                                 <ul class="shopping-list">
                                                                     {{-- {{Helper::getAllProductFromCart()}} --}}
                                                                         @foreach(Helper::getAllProductFromCart() as $data)
-                                                                                @php
-                                                                                    $photo=explode(',',$data->product['photo']);
-                                                                                @endphp
-                                                                                <li>
-                                                                                    <a href="{{route('cart-delete',$data->id)}}" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                                                    <a class="cart-img" href="#"><img src="{{$photo[0]}}" alt="{{$photo[0]}}"></a>
-                                                                                    <h4 style="width: 59.5%;"><a href="{{route('product-detail',$data->product['slug'])}}" target="_blank" style="color: #17a2b8;">{{$data->product['title']}}</a></h4>
-                                                                                    <p class="quantity">{{$data->quantity}} x - <span class="amount">${{number_format($data->price,2)}}</span></p>
-                                                                                </li>
+                                                                            <li>
+                                                                                <a href="{{route('cart-delete',$data->id)}}" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+                                                                                <a class="cart-img" href="#"><img src="{{ $data->product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $data->product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}"></a>
+                                                                                <h4 style="width: 59.5%;"><a href="{{route('product-detail',$data->product['slug'])}}" target="_blank" style="color: #17a2b8;">{{$data->product['title']}}</a></h4>
+                                                                                <p class="quantity">{{$data->quantity}} x - <span class="amount">${{number_format($data->price,2)}}</span></p>
+                                                                            </li>
                                                                         @endforeach
                                                                 </ul>
                                                                 <div class="bottom">
@@ -310,7 +304,7 @@
                                                                         <span>Total</span>
                                                                         <span class="total-amount">${{number_format(Helper::totalCartPrice(),2)}}</span>
                                                                     </div>
-                                                                    <a href="{{route('checkout')}}" class="btn animate">Checkout</a>
+                                                                    {{-- <a href="{{route('checkout')}}" class="btn animate">Checkout</a> --}}
                                                                 </div>
                                                             </div>
                                                         @endauth

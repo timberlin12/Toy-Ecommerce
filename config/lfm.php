@@ -49,19 +49,24 @@ return [
         'file'  => [
             'folder_name'  => 'files',
             'startup_view' => 'grid',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 100000, // Increased to 100 MB (100,000 KB)
             'valid_mime'   => [
                 'image/jpeg',
                 'image/pjpeg',
                 'image/png',
                 'image/gif',
                 'image/svg+xml',
+                'video/mp4',  // Added for .mp4 videos
+                'video/mpeg', // Added for .mpeg videos
+                'video/quicktime', // Added for .mov videos
+                'video/x-matroska', // Added for .mkv videos
+                'video/x-msvideo', // Added for .avi videos
             ],
         ],
         'image' => [
             'folder_name'  => 'photos',
             'startup_view' => 'list',
-            'max_size'     => 50000, // size in KB
+            'max_size'     => 100000, // Increased to 100 MB (100,000 KB)
             'valid_mime'   => [
                 'image/jpeg',
                 'image/pjpeg',
@@ -70,6 +75,7 @@ return [
                 'image/svg+xml',
                 'application/pdf',
                 'text/plain',
+                'video/mp4',
             ],
         ],
     ],
@@ -98,9 +104,9 @@ return [
 
     'alphanumeric_directory'   => false,
 
-    'should_validate_size'     => false,
+    'should_validate_size'     => true, // Enable size validation to enforce max_size
 
-    'should_validate_mime'     => false,
+    'should_validate_mime'     => true, // Enable MIME validation to enforce valid_mime
 
     // behavior on files with identical name
     // setting it to true cause old file replace with new one
@@ -148,6 +154,11 @@ return [
         'png'  => 'PNG Image',
         'ppt'  => 'Microsoft PowerPoint',
         'pptx' => 'Microsoft PowerPoint',
+        'mp4'  => 'Video', // Added for videos
+        'mpeg' => 'Video', // Added for videos
+        'mov'  => 'Video', // Added for videos
+        'mkv'  => 'Video', // Added for videos
+        'avi'  => 'Video', // Added for videos
     ],
 
     /*

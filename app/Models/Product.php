@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Cart;
+use App\Models\ProductImage;
 /**
  * App\Models\Product
  *
@@ -12,7 +13,6 @@ use App\Models\Cart;
  * @property string $slug
  * @property string $summary
  * @property string|null $description
- * @property string $photo
  * @property int $stock
  * @property string|null $size
  * @property string $condition
@@ -20,6 +20,7 @@ use App\Models\Cart;
  * @property float $price
  * @property float $discount
  * @property int $is_featured
+ * @property string|null $video_url
  * @property int|null $cat_id
  * @property int|null $child_cat_id
  * @property int|null $brand_id
@@ -29,6 +30,9 @@ use App\Models\Cart;
  * @property-read \Illuminate\Database\Eloquent\Collection|Cart[] $carts
  * @property-read int|null $carts_count
  * @property-read \App\Models\Category|null $cat_info
+ * @property-read \App\Models\Category|null $sub_cat_info
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductImage[] $images
+ * @property-read int|null $images_count
  * @property-read \Illuminate\Database\Eloquent\Collection|Product[] $rel_prods
  * @property-read int|null $rel_prods_count
  * @property-read \App\Models\Category|null $sub_cat_info
@@ -46,7 +50,6 @@ use App\Models\Cart;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereDiscount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereIsFeatured($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Product wherePhoto($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSize($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSlug($value)
@@ -55,11 +58,16 @@ use App\Models\Cart;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSummary($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereVideoUrl($value)
  * @mixin \Eloquent
  */
 class Product extends Model
 {
-    protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','price','brand_id','discount','status','photo','size','stock','is_featured','condition'];
+    protected $fillable = [
+        'title', 'slug', 'summary', 'description', 'cat_id', 'child_cat_id', 
+        'price', 'brand_id', 'discount', 'status', 'size', 'stock', 
+        'is_featured', 'condition', 'video_url'
+    ];
 
     public function cat_info(){
         return $this->hasOne('App\Models\Category','id','cat_id');
@@ -67,24 +75,47 @@ class Product extends Model
     public function sub_cat_info(){
         return $this->hasOne('App\Models\Category','id','child_cat_id');
     }
-    public static function getAllProduct(){
-        return Product::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
-    public function rel_prods(){
-        return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
+
+    public static function getAllProduct()
+    {
+        return Product::with(['images', 'sub_cat_info'])->orderBy('id', 'desc')->paginate(10);
     }
-    public function getReview(){
-        return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
+
+    public function getRelProdsAttribute()
+    {
+        return Product::whereIn('cat_id', array_filter(explode(',', $this->cat_id)))
+            ->where('status', 'active')
+            ->where('id', '!=', $this->id)
+            ->orderBy('id', 'DESC')
+            ->limit(8)
+            ->get();
     }
-    public static function getProductBySlug($slug){
-        return Product::with(['cat_info','rel_prods','getReview'])->where('slug',$slug)->first();
+
+
+    public function getReview()
+    {
+        return $this->hasMany(ProductReview::class, 'product_id', 'id')
+            ->with('user_info')
+            ->where('status', 'active')
+            ->orderBy('id', 'DESC');
     }
-    public static function countActiveProduct(){
-        $data=Product::where('status','active')->count();
-        if($data){
-            return $data;
-        }
-        return 0;
+
+    public static function getProductBySlug($slug)
+    {
+        return Product::with(['images', 'getReview']) // ❌ removed rel_prods
+            ->where('slug', $slug)
+            ->first();
+    }
+
+    public static function countActiveProduct()
+    {
+        $data = Product::where('status', 'active')->count();
+        return $data ?: 0;
     }
 
     public function carts(){

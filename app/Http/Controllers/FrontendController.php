@@ -25,19 +25,39 @@ class FrontendController extends Controller
     }
 
     public function home(){
-        $featured=Product::where('status','active')->where('is_featured',1)->orderBy('price','DESC')->limit(2)->get();
-        $posts=Post::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        $banners=Banner::where('status','active')->limit(3)->orderBy('id','DESC')->get();
-        // return $banner;
-        $products=Product::where('status','active')->orderBy('id','DESC')->limit(8)->get();
-        $category=Category::where('status','active')->where('is_parent',1)->orderBy('title','ASC')->get();
-        // return $category;
+        $featured = Product::where('status', 'active')
+            ->where('is_featured', 1)
+            ->orderBy('price', 'DESC')
+            ->limit(2)
+            ->with('images') // Eager load the images relationship
+            ->get();
+
+        $posts = Post::where('status', 'active')
+            ->orderBy('id', 'DESC')
+            ->limit(3)
+            ->get();
+
+        $banners = Banner::where('status', 'active')
+            ->limit(3)
+            ->orderBy('id', 'DESC')
+            ->get();
+
+        $products = Product::where('status', 'active')
+            ->orderBy('id', 'DESC')
+            ->limit(8)
+            ->with('images') // Eager load the images relationship
+            ->get();
+
+        $category = Category::where('status', 'active')
+            ->where('is_parent', 1)
+            ->orderBy('title', 'ASC')
+            ->get();
         return view('frontend.index')
-                ->with('featured',$featured)
-                ->with('posts',$posts)
-                ->with('banners',$banners)
-                ->with('product_lists',$products)
-                ->with('category_lists',$category);
+            ->with('featured', $featured)
+            ->with('posts', $posts)
+            ->with('banners', $banners)
+            ->with('product_lists', $products)
+            ->with('category_lists', $category);
     }   
 
     public function aboutUs(){
@@ -239,6 +259,7 @@ class FrontendController extends Controller
         $products=Category::getProductBySubCat($request->sub_slug);
         // return $products;
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
+        // dd($products);
 
         if(request()->is('e-shop.loc/product-grids')){
             return view('frontend.pages.product-grids')->with('products',$products->sub_products)->with('recent_products',$recent_products);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\ProductImage;
 
 use Illuminate\Support\Str;
 
@@ -18,9 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::getAllProduct();
-        // return $products;
-        return view('backend.product.index')->with('products',$products);
+        $products = Product::getAllProduct();
+        return view('backend.product.index')->with('products', $products);
     }
 
     /**
@@ -30,10 +30,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $brand=Brand::get();
-        $category=Category::where('is_parent',1)->get();
-        // return $category;
-        return view('backend.product.create')->with('categories',$category)->with('brands',$brand);
+        $brand = Brand::get();
+        $category = Category::where('is_parent', 1)->get();
+        // dd($category);
+        return view('backend.product.create')->with('categories', $category)->with('brands', $brand);
     }
 
     /**
@@ -44,50 +44,67 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request->all();
-        $this->validate($request,[
-            // 'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
-            'cat_id'=>'required|exists:categories,id',
-            'brand_id'=>'nullable|exists:brands,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
+        // Validate the request
+        $validated = $this->validate($request, [
+            'title' => 'string|required',
+            'summary' => 'string|required',
+            'description' => 'string|nullable',
+            'video' => 'string|nullable',
+            'size' => 'nullable',
+            'stock' => 'required|numeric',
+            'cat_id' => 'required|exists:categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'child_cat_id' => 'nullable|exists:categories,id',
+            'is_featured' => 'sometimes|in:1',
+            'status' => 'required|in:active,inactive',
+            'condition' => 'required|in:default,new,hot',
+            'price' => 'required|numeric',
+            'discount' => 'nullable|numeric',
+            'photos' => 'required|array',
+            'photos.*' => 'string|url'
         ]);
 
-        $data=$request->all();
-        $slug=Str::slug($request->title);
-        $count=Product::where('slug',$slug)->count();
-        if($count>0){
-            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        // Prepare data for product creation
+        $data = $request->all();
+        
+        // Generate unique slug
+        $slug = Str::slug($request->title);
+        $count = Product::where('slug', $slug)->count();
+        if ($count > 0) {
+            $slug = $slug . '-' . date('ymdis') . '-' . rand(0, 999);
         }
-        $data['slug']=$slug;
-        $data['is_featured']=$request->input('is_featured',0);
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
-        }
-        else{
-            $data['size']='';
-        }
-        // return $size;
-        // return $data;
-        $status=Product::create($data);
-        if($status){
-            request()->session()->flash('success','Product added');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
+        
+        $data['slug'] = $slug;
+        $data['is_featured'] = $request->input('is_featured', 0);
+        
+        // Handle size array
+        $size = $request->input('size');
+        $data['size'] = $size ? implode(',', $size) : '';
+        
+        // Handle video URL
+        $data['video_url'] = $request->input('video');
+        
+        // Remove photos from product data as they'll be stored separately
+        $photos = $request->input('photos');
+        unset($data['photos']);
+        
+        // Create product
+        try {
+            $product = Product::create($data);
+            
+            // Store multiple photos
+            foreach ($photos as $photoUrl) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_url' => $photoUrl
+                ]);
+            }
+            
+            request()->session()->flash('success', 'Product added successfully');
+        } catch (\Exception $e) {
+            request()->session()->flash('error', 'Error adding product: ' . $e->getMessage());
         }
         return redirect()->route('product.index');
-
     }
 
     /**
@@ -109,14 +126,19 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $brand=Brand::get();
-        $product=Product::findOrFail($id);
-        $category=Category::where('is_parent',1)->get();
-        $items=Product::where('id',$id)->get();
-        // return $items;
-        return view('backend.product.edit')->with('product',$product)
-                    ->with('brands',$brand)
-                    ->with('categories',$category)->with('items',$items);
+        $brand = Brand::get();
+        $product = Product::findOrFail($id);
+        $category = Category::where('is_parent', 1)->get();
+        $items = Product::where('id', $id)->get();
+        
+        // Retrieve photos from ProductImage model and format as comma-separated string for compatibility with edit.blade.php
+        $product->photo = $product->images()->pluck('image_url')->implode(',');
+        // dd($product);
+        return view('backend.product.edit')
+            ->with('product', $product)
+            ->with('brands', $brand)
+            ->with('categories', $category)
+            ->with('items', $items);
     }
 
     /**
@@ -128,41 +150,62 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product=Product::findOrFail($id);
-        $this->validate($request,[
-            'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
-            'cat_id'=>'required|exists:categories,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            'brand_id'=>'nullable|exists:brands,id',
-            'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
+        $product = Product::findOrFail($id);
+
+        // Validate the request
+        $this->validate($request, [
+            'title' => 'string|required',
+            'summary' => 'string|required',
+            'description' => 'string|nullable',
+            'video' => 'string|nullable',
+            'size' => 'nullable',
+            'stock' => 'required|numeric',
+            'cat_id' => 'required|exists:categories,id',
+            'child_cat_id' => 'nullable|exists:categories,id',
+            'is_featured' => 'sometimes|in:1',
+            'brand_id' => 'nullable|exists:brands,id',
+            'status' => 'required|in:active,inactive',
+            'condition' => 'required|in:default,new,hot',
+            'price' => 'required|numeric',
+            'discount' => 'nullable|numeric',
+            'photos' => 'required|array',
+            'photos.*' => 'string|url'
         ]);
 
-        $data=$request->all();
-        $data['is_featured']=$request->input('is_featured',0);
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
+        // Prepare data for product update
+        $data = $request->all();
+        $data['is_featured'] = $request->input('is_featured', 0);
+
+        // Handle size array
+        $size = $request->input('size');
+        $data['size'] = $size ? implode(',', $size) : '';
+
+        // Handle video URL
+        $data['video_url'] = $request->input('video');
+
+        // Remove photos from product data as they'll be stored separately
+        $photos = $request->input('photos');
+        unset($data['photos']);
+
+        // Update product
+        try {
+            // Update the product record
+            $product->fill($data)->save();
+
+            // Delete existing photos and store new ones
+            $product->images()->delete();
+            foreach ($photos as $photoUrl) {
+                ProductImage::create([
+                    'product_id' => $product->id,
+                    'image_url' => $photoUrl
+                ]);
+            }
+
+            request()->session()->flash('success', 'Product updated successfully');
+        } catch (\Exception $e) {
+            request()->session()->flash('error', 'Error updating product: ' . $e->getMessage());
         }
-        else{
-            $data['size']='';
-        }
-        // return $data;
-        $status=$product->fill($data)->save();
-        if($status){
-            request()->session()->flash('success','Product updated');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
+
         return redirect()->route('product.index');
     }
 
@@ -174,14 +217,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product=Product::findOrFail($id);
-        $status=$product->delete();
+        $product = Product::findOrFail($id);
+        $status = $product->delete();
         
-        if($status){
-            request()->session()->flash('success','Product deleted');
-        }
-        else{
-            request()->session()->flash('error','Error while deleting product');
+        if ($status) {
+            request()->session()->flash('success', 'Product deleted');
+        } else {
+            request()->session()->flash('error', 'Error while deleting product');
         }
         return redirect()->route('product.index');
     }

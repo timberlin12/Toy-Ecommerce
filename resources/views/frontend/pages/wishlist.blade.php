@@ -38,10 +38,7 @@
 							@if(Helper::getAllProductFromWishlist())
 								@foreach(Helper::getAllProductFromWishlist() as $key=>$wishlist)
 									<tr>
-										@php 
-											$photo=explode(',',$wishlist->product['photo']);
-										@endphp
-										<td class="image" data-title="No"><img src="{{$photo[0]}}" alt="{{$photo[0]}}"></td>
+										<td class="image" data-title="No"><img src="{{ $wishlist->product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $wishlist->product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}"></td>
 										<td class="product-des" data-title="Description">
 											<p class="product-name"><a href="{{route('product-detail',$wishlist->product['slug'])}}">{{$wishlist->product['title']}}</a></p>
 											<p class="product-des">{!!($wishlist['summary']) !!}</p>

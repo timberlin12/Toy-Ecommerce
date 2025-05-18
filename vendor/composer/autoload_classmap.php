@@ -87,6 +87,7 @@ return array(
     'Barryvdh\\LaravelIdeHelper\\Eloquent' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Eloquent.php',
     'Barryvdh\\LaravelIdeHelper\\Factories' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Factories.php',
     'Barryvdh\\LaravelIdeHelper\\Generator' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Generator.php',
+    'Barryvdh\\LaravelIdeHelper\\Helpers' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Helpers.php',
     'Barryvdh\\LaravelIdeHelper\\IdeHelperServiceProvider' => $vendorDir . '/barryvdh/laravel-ide-helper/src/IdeHelperServiceProvider.php',
     'Barryvdh\\LaravelIdeHelper\\Macro' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Macro.php',
     'Barryvdh\\LaravelIdeHelper\\Method' => $vendorDir . '/barryvdh/laravel-ide-helper/src/Method.php',

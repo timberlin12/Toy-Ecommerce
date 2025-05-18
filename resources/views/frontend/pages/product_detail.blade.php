@@ -7,12 +7,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="keywords" content="online shop, purchase, cart, ecommerce site, best online shopping">
-	<meta name="description" content="{{$product_detail->summary}}">
-	<meta property="og:url" content="{{route('product-detail',$product_detail->slug)}}">
+	<meta name="description" content="{{optional($product_detail)->summary}}">
+	<meta property="og:url" content="{{ $product_detail ? route('product-detail', $product_detail->slug) : '' }}">
 	<meta property="og:type" content="article">
-	<meta property="og:title" content="{{$product_detail->title}}">
-	<meta property="og:image" content="{{$product_detail->photo}}">
-	<meta property="og:description" content="{{$product_detail->description}}">
+	<meta property="og:title" content="{{optional($product_detail)->title}}">
+	<meta property="og:image" content="{{optional($product_detail)->images->first()->image_url}}">
+	<meta property="og:description" content="{{optional($product_detail)->description}}">
 @endsection
 @section('title','Ecommerce Laravel || PRODUCT DETAIL')
 @section('main-content')
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 		<!-- End Breadcrumbs -->
-				
+				{{-- @dd($product_detail); --}}
 		<!-- Shop Single -->
 		<section class="shop single section">
 					<div class="container">
@@ -46,13 +46,9 @@
 											<!-- Images slider -->
 											<div class="flexslider-thumbnails">
 												<ul class="slides">
-													@php 
-														$photo=explode(',',$product_detail->photo);
-													// dd($photo);
-													@endphp
-													@foreach($photo as $data)
-														<li data-thumb="{{$data}}" rel="adjustX:10, adjustY:">
-															<img src="{{$data}}" alt="{{$data}}">
+													@foreach($product_detail->images as $data)
+														<li data-thumb="{{$data->image_url}}" rel="adjustX:10, adjustY:">
+															<img src="{{$data->image_url}}" alt="{{$data->image_url}}">
 														</li>
 													@endforeach
 												</ul>
@@ -150,16 +146,16 @@
 												@endif
 												<!-- <p class="availability">Stock : @if($product_detail->stock>0)<span class="badge badge-success">{{$product_detail->stock}}</span>@else <span class="badge badge-danger">{{$product_detail->stock}}</span>  @endif</p> -->
 												<p class="availability"> Stock: 
-    @if($product_detail->stock > 0)
-        @if($product_detail->stock < 5)
-            <span class="badge badge-warning">Low in stock</span>
-        @else
-            <span class="badge badge-success">Available</span>
-        @endif
-    @else
-        <span class="badge badge-danger">Out of stock</span>
-    @endif
-</p>
+													@if($product_detail->stock > 0)
+														@if($product_detail->stock < 5)
+															<span class="badge badge-warning">Low in stock</span>
+														@else
+															<span class="badge badge-success">Available</span>
+														@endif
+													@else
+														<span class="badge badge-danger">Out of stock</span>
+													@endif
+												</p>
 
 											</div>
 											<!--/ End Product Buy -->
@@ -335,11 +331,12 @@
                                 <div class="single-product">
                                     <div class="product-img">
 										<a href="{{route('product-detail',$data->slug)}}">
-											@php 
-												$photo=explode(',',$data->photo);
-											@endphp
-                                            <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                            <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+											@if($product->images->isNotEmpty())
+                                            	<img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
+											@else
+												<img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
+											@endif
+											<img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
                                             <span class="price-dec">{{$data->discount}} % Off</span>
                                                                     {{-- <span class="out-of-stock">Hot</span> --}}
                                         </a>

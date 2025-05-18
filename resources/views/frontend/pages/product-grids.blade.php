@@ -3,6 +3,26 @@
 @section('title','Ecommerce Laravel || PRODUCT PAGE')
 
 @section('main-content')
+<style>
+    .video-wrapper {
+        position: relative;
+        cursor: pointer;
+    }
+
+    .video-center-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 60px;
+        color: white;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        padding: 10px 20px;
+        z-index: 10;
+        pointer-events: none;
+    }
+</style>
 	<!-- Breadcrumbs -->
     <div class="breadcrumbs">
         <div class="container">
@@ -90,12 +110,9 @@
                                     {{-- {{dd($recent_products)}} --}}
                                     @foreach($recent_products as $product)
                                         <!-- Single Post -->
-                                        @php
-                                            $photo=explode(',',$product->photo);
-                                        @endphp
                                         <div class="single-post first">
                                             <div class="image">
-                                                <img src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                                <img src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
                                             </div>
                                             <div class="content">
                                                 <h5><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h5>
@@ -168,11 +185,12 @@
                                         <div class="single-product">
                                             <div class="product-img">
                                                 <a href="{{route('product-detail',$product->slug)}}">
-                                                    @php
-                                                        $photo=explode(',',$product->photo);
-                                                    @endphp
-                                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                                    @if($product->images->isNotEmpty())
+                                                        <img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
+                                                    @else
+                                                        <img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
+                                                    @endif
+                                                    <img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
                                                     @if($product->discount)
                                                                 <span class="price-dec">{{$product->discount}} % Off</span>
                                                     @endif
@@ -236,15 +254,20 @@
                                         <!-- Product Slider -->
                                             <div class="product-gallery">
                                                 <div class="quickview-slider-active">
-                                                    @php
-                                                        $photo=explode(',',$product->photo);
-                                                    // dd($photo);
-                                                    @endphp
-                                                    @foreach($photo as $data)
-                                                        <div class="single-slider">
-                                                            <img src="{{$data}}" alt="{{$data}}">
-                                                        </div>
-                                                    @endforeach
+                                                @if($product->video_url)
+                                                    <div class="video-wrapper" id="videoContainer" style="position: relative;">
+                                                        <video id="customVideo" autoplay loop muted playsinline style="width: 100%; height: auto; display: block;">
+                                                            <source src="{{ $product->video_url }}" type="video/mp4">
+                                                            Your browser does not support the video tag.
+                                                        </video>
+                                                        <div id="videoOverlayIcon" class="video-center-icon" style="display: none;">❚❚</div>
+                                                    </div>
+                                                @endif
+                                                @foreach($product->images as $image)
+                                                    <div class="single-slider">
+                                                        <img src="{{$image->image_url}}" alt="{{$image->image_url}}">
+                                                    </div>
+                                                @endforeach
                                                 </div>
                                             </div>
                                         <!-- End Product slider -->
@@ -448,5 +471,33 @@
                 "  -  "+m_currency + $("#slider-range").slider("values", 1));
             }
         })
+        
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const video = document.getElementById("customVideo");
+        const overlay = document.getElementById("videoOverlayIcon");
+        const container = document.getElementById("videoContainer");
+
+        container.addEventListener("click", function () {
+            if (video.paused) {
+                video.play();
+                showIcon("▶");
+            } else {
+                video.pause();
+                showIcon("❚❚");
+            }
+        });
+
+        function showIcon(symbol) {
+            overlay.innerHTML = symbol;
+            overlay.style.display = "block";
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 500);
+        }
+    });
+</script>
+
 @endpush

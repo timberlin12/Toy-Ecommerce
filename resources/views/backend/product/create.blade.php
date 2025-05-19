@@ -321,7 +321,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-form-label">Video <span class="text-danger">*</span></label>
+                    <label class="col-form-label">Video </label>
                     <div id="video-wrapper">
                         <div class="video-item">
                             <div class="input-group mb-2">

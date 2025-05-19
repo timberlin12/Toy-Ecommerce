@@ -24,7 +24,6 @@
               <th>Featured</th>
               <th>Price</th>
               <th>Discount</th>
-              <th>Size</th>
               <th>Condition</th>
               <th>Brand</th>
               <th>Stock</th>
@@ -50,9 +49,8 @@
                       </sub>
                     </td>
                     <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td>
-                    <td>${{$product->price}}</td>
-                    <td>  {{$product->discount}}%</td>
-                    <td>{{$product->size}}</td>
+                    <td>{{$product->price}}</td>
+                    <td>{{$product->discount}}%</td>
                     <td>{{$product->condition}}</td>
                     <td> {{isset($product->brand->title) ? ucfirst($product->brand->title) : ''}}</td>
                     <td>

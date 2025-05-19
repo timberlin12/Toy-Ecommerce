@@ -86,7 +86,11 @@
     <div class="container-fluid">
         <div class="row">
             @php
-            $category_lists=DB::table('categories')->where('status','active')->limit(3)->get();
+            $category_lists = DB::table('categories')
+                ->where('status', 'active')
+                ->where('is_parent', 1)
+                ->limit(3)
+                ->get();
             @endphp
             @if($category_lists)
                 @foreach($category_lists as $cat)

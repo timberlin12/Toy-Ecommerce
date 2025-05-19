@@ -50,10 +50,8 @@ class ProductController extends Controller
             'summary' => 'string|required',
             'description' => 'string|nullable',
             'video' => 'string|nullable',
-            'size' => 'nullable',
             'stock' => 'required|numeric',
             'cat_id' => 'required|exists:categories,id',
-            'brand_id' => 'nullable|exists:brands,id',
             'child_cat_id' => 'nullable|exists:categories,id',
             'is_featured' => 'sometimes|in:1',
             'status' => 'required|in:active,inactive',
@@ -61,7 +59,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric',
             'photos' => 'required|array',
-            'photos.*' => 'string|url'
+            'photos.*' => 'string',
         ]);
 
         // Prepare data for product creation
@@ -78,13 +76,13 @@ class ProductController extends Controller
         $data['is_featured'] = $request->input('is_featured', 0);
         
         // Handle size array
-        $size = $request->input('size');
-        $data['size'] = $size ? implode(',', $size) : '';
+        // $size = $request->input('size');
+        // $data['size'] = $size ? implode(',', $size) : '';
         
         // Handle video URL
         $data['video_url'] = $request->input('video');
         
-        // Remove photos from product data as they'll be stored separately
+        // Remove photos from product data
         $photos = $request->input('photos');
         unset($data['photos']);
         
@@ -102,8 +100,10 @@ class ProductController extends Controller
             
             request()->session()->flash('success', 'Product added successfully');
         } catch (\Exception $e) {
+            \Log::error('Product creation failed: ' . $e->getMessage());
             request()->session()->flash('error', 'Error adding product: ' . $e->getMessage());
         }
+        
         return redirect()->route('product.index');
     }
 
@@ -169,7 +169,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'discount' => 'nullable|numeric',
             'photos' => 'required|array',
-            'photos.*' => 'string|url'
+            'photos.*' => 'string'
         ]);
 
         // Prepare data for product update

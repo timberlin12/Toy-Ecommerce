@@ -197,7 +197,7 @@
                                         @endphp
                                         <div class="product-price">
                                             <span>{{number_format($after_discount, 2)}}</span>
-                                            <del style="padding-left: 4%;"{{  }}}</del>
+                                            <del style="padding-left: 4%;">{{number_format($product->price, 2)}}</del>
                                         </div>
                                     </div>
                                 </div>

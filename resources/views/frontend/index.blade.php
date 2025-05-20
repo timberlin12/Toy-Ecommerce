@@ -160,6 +160,15 @@
         <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
             <div class="single-product">
                 <div class="product-img">
+                    <div class="button-head">
+                        <div class="product-action">
+                            <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class="ti-eye"></i><span>Quick Shop</span></a>
+                            <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
+                        </div>
+                        <div class="product-action-2">
+                            <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
+                        </div>
+                    </div>
                     <a href="{{route('product-detail', $product->slug)}}">
                         @php
                             $photos = explode(',', $product->photo);
@@ -176,15 +185,6 @@
                             <span class="price-dec">{{$product->discount}}% Off</span>
                         @endif
                     </a>
-                    <div class="button-head">
-                        <div class="product-action">
-                            <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class="ti-eye"></i><span>Quick Shop</span></a>
-                            <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
-                        </div>
-                        <div class="product-action-2">
-                            <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
-                        </div>
-                    </div>
                 </div>
                 <div class="product-content">
                     <h3><a href="{{route('product-detail', $product->slug)}}">{{$product->title}}</a></h3>
@@ -255,15 +255,6 @@
                             <!-- Start Single Product -->
                         <div class="single-product">
                             <div class="product-img">
-                                <a href="{{route('product-detail',$product->slug)}}">
-                                    @php
-                                        $photo=explode(',',$product->photo);
-                                    // dd($photo);
-                                    @endphp
-                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                    {{-- <span class="out-of-stock">Hot</span> --}}
-                                </a>
                                 <div class="button-head">
                                     <div class="product-action">
                                         <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
@@ -273,6 +264,15 @@
                                         <a href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
                                     </div>
                                 </div>
+                                <a href="{{route('product-detail',$product->slug)}}">
+                                    @php
+                                        $photo=explode(',',$product->photo);
+                                    // dd($photo);
+                                    @endphp
+                                    <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
+                                    {{-- <span class="out-of-stock">Hot</span> --}}
+                                </a>
                             </div>
                             <div class="product-content">
                                 <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
@@ -600,7 +600,7 @@
 @endpush
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> --}}
     <script>
 
         /*==================================================================
@@ -671,6 +671,21 @@
             }
             return false
         }
+
+        $(document).ready(function() {
+			$('.modal').on('show.bs.modal', function () {
+				var $slider = $(this).find('.quickview-slider-active');
+
+				// Remove all owl-related classes
+				$slider.removeClass('owl-carousel owl-theme owl-loaded owl-loading');
+
+				// Remove owl internal structure and unwrap images
+				$slider.find('.owl-stage-outer, .owl-stage, .owl-item, .owl-wrapper-outer, .owl-wrapper').each(function(){
+					$(this).replaceWith($(this).html());
+				});
+			});
+			$('.owl-item.cloned').hide();
+		});
     </script>
 
 @endpush

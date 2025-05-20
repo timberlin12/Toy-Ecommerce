@@ -75,7 +75,7 @@
                                                 <button type="submit" class="filter_button">Filter</button>
                                                 <div class="label-input">
                                                     <span>Range:</span>
-                                                    <input style="" type="text" id="amount" readonly/>
+                                                    <input type="text" id="amount" readonly/>
                                                     <input type="hidden" name="price_range" id="price_range" value="@if(!empty($_GET['price'])){{$_GET['price']}}@endif"/>
                                                 </div>
                                                 </div>
@@ -102,7 +102,7 @@
                                                 @php
                                                     $org=($product->price-($product->price*$product->discount)/100);
                                                 @endphp
-                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del>   ${{number_format($org,2)}}  </p>
+                                                <p class="price"><del class="text-muted">${{number_format($product->price,2)}}</del> <br>  ${{number_format($org,2)}}  </p>
 
                                             </div>
                                         </div>
@@ -167,6 +167,16 @@
                                     <div class="col-lg-4 col-md-6 col-12">
                                         <div class="single-product">
                                             <div class="product-img">
+
+                                                <div class="button-head">
+                                                    <div class="product-action">
+                                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+                                                        <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
+                                                    </div>
+                                                    <div class="product-action-2">
+                                                        <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
+                                                    </div>
+                                                </div>
                                                 <a href="{{route('product-detail',$product->slug)}}">
                                                     @php
                                                         $photo=explode(',',$product->photo);
@@ -177,15 +187,6 @@
                                                                 <span class="price-dec">{{$product->discount}} % Off</span>
                                                     @endif
                                                 </a>
-                                                <div class="button-head">
-                                                    <div class="product-action">
-                                                        <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-                                                        <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-                                                    </div>
-                                                    <div class="product-action-2">
-                                                        <a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="product-content">
                                                 <h3><a href="{{route('product-detail',$product->slug)}}">{{$product->title}}</a></h3>
@@ -303,7 +304,7 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <div class="size">
+                                            {{-- <div class="size">
                                                 <div class="row">
                                                     <div class="col-lg-6 col-12">
                                                         <h5 class="title">Size</h5>
@@ -317,7 +318,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    {{-- <div class="col-lg-6 col-12">
+                                                    <div class="col-lg-6 col-12">
                                                         <h5 class="title">Color</h5>
                                                         <select>
                                                             <option selected="selected">orange</option>
@@ -325,9 +326,9 @@
                                                             <option>black</option>
                                                             <option>pink</option>
                                                         </select>
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <form action="{{route('single-add-to-cart')}}" method="POST">
                                                 @csrf
                                                 <div class="quantity">
@@ -381,10 +382,13 @@
         margin-top:10px;
         color: white;
     }
+    .quickview-content{
+		padding-bottom: 0px;
+	}
 </style>
 @endpush
 @push('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> --}}
     {{-- <script>
         $('.cart').click(function(){
             var quantity=1;
@@ -448,5 +452,19 @@
                 "  -  "+m_currency + $("#slider-range").slider("values", 1));
             }
         })
+        $(document).ready(function() {
+			$('.modal').on('show.bs.modal', function () {
+				var $slider = $(this).find('.quickview-slider-active');
+
+				// Remove all owl-related classes
+				$slider.removeClass('owl-carousel owl-theme owl-loaded owl-loading');
+
+				// Remove owl internal structure and unwrap images
+				$slider.find('.owl-stage-outer, .owl-stage, .owl-item, .owl-wrapper-outer, .owl-wrapper').each(function(){
+					$(this).replaceWith($(this).html());
+				});
+			});
+			$('.owl-item.cloned').hide();
+		});
     </script>
 @endpush

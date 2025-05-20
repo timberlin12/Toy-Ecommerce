@@ -1169,6 +1169,31 @@ Version:1.0
 }
 .header.sticky .header-inner .nav li a {
 	color: #17a2b8;
+}.header.shop .side-header{
+	background-color: grey;
+}
+.sticky .side-header{
+	background-color: white !important;
+}
+.header.shop .nav li .white-image {
+	display: block;
+}.header.shop .nav li .blue-image {
+	display: none;
+}
+.header.sticky .header-inner .nav li .white-image {
+	display: none;
+}.header.sticky .header-inner .nav li .blue-image {
+	display: block !important;
+}
+.header.shop .sec-header .white-image {
+	display: block;
+}.header.shop .sec-header .blue-image {
+	display: none;
+}
+.header.sticky .header-inner .sec-header .white-image {
+	display: none;
+}.header.sticky .header-inner .sec-header .blue-image {
+	display: block !important;
 }
 .header.sticky.v3 .header-inner .nav li a {
 	color: #fff;
@@ -5114,6 +5139,79 @@ Version:1.0
 	color:#fff;
 	text-decoration:underline;
 }
+
+.navbar-toggler {
+    border: none;
+    font-size: 28px;
+    background: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+}
+
+@media (min-width: 769px) {
+    .navbar-toggler {
+        display: none;
+    }
+	.side-header{
+		display: none !important;
+	}
+}
+
+@media (max-width: 768px) {
+	.one-header{
+		display: none !important;
+	}
+}
+
+.sec-header {
+    display: none;
+}
+.header-inner .one-header {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .sec-header {
+        display: flex !important; /* or block, depending on your layout */
+		align-items: center;
+		padding-left: 20px;
+    }
+    .header-inner .one-header {
+        display: none;
+    }
+
+	.side-header .nav-side-menu li{
+		display: block !important;
+	}
+}
+
+@media (max-width: 426px) {
+	.side-header .nav-side-menu{
+		padding-bottom: 0% !important;
+	}
+}
+
+
+
+.navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' ... %3C/svg%3E");
+}
+
+.side-header .nav-side-menu li{
+	display: block;
+}
+
+
+
 /*=============================
 	End Footer CSS
 ===============================*/

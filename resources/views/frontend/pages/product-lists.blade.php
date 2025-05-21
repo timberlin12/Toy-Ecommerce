@@ -219,6 +219,14 @@
 																	<a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Add to cart</a>
 																</div>
 															</div>
+															<a href="{{route('product-detail',$product->slug)}}">
+																@if($product->images->isNotEmpty())
+																	<img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
+																@else
+																	<img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
+																@endif
+																<img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
+															</a>
 														</div>
 													</div>
 												</div>

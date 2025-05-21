@@ -125,6 +125,12 @@
 	<!-- Active JS -->
 	<script src="{{asset('frontend/js/active.js')}}"></script>
 
+
+	<!-- BEFORE </body> -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
 	
 	@stack('scripts')
 	<script>
@@ -152,3 +158,19 @@
 			});
 		});
 	  </script>
+
+	  <script>
+		$(document).ready(function () {
+			$('#menu-toggle').on('click', function () {
+				// Check if the menu already exists
+				if ($('.side-header').children('.cat-nav-head').length === 0) {
+					$.get("{{ route('side.menu') }}", function (data) {
+						$('.side-header').html(data); // Inject the menu
+					});
+				} else {
+					// Optional: toggle visibility if it already exists
+					$('.cat-nav-head').toggle();
+				}
+			});
+		});
+	</script>

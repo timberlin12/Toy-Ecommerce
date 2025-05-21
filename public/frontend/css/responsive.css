@@ -113,7 +113,7 @@ Version:1.0
 }
 .header.shop .nav li .new {
 	font-size: 8px;
-	left: 21px;
+	left: 180px;
 	top: 0px;
 	font-weight: 500;
 	height: 16px;
@@ -522,9 +522,9 @@ Version:1.0
 .header.shop .all-category {
 	display: none;
 }
-.header .header-inner{
+/* .header .header-inner{
 	display:none 
-}
+} */
 .hero-slider {
 	height: 350px;
 }
@@ -1254,12 +1254,12 @@ Version:1.0
 .header.shop .all-category {
 	display: none;
 }
-.header .header-inner{
+/* .header .header-inner{
 	display:none 
-}
-.header.shop .nav li .new {
+} */
+/* .header.shop .nav li .new {
 	display:none !important;
-}
+} */
 .hero-slider {
 	height: 350px;
 }

@@ -1170,7 +1170,7 @@ Version:1.0
 .header.sticky .header-inner .nav li a {
 	color: #17a2b8;
 }.header.shop .side-header{
-	background-color: grey;
+	background-color: #17a2b8;
 }
 .sticky .side-header{
 	background-color: white !important;

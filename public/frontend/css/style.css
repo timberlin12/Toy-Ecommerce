@@ -1821,6 +1821,7 @@ Version:1.0
 }
 .midium-banner .single-banner{
 	position:relative;
+	height: 650px;
 }
 .midium-banner .single-banner img{
 	height:100%;
@@ -1981,13 +1982,15 @@ Version:1.0
   position: relative;
   overflow: hidden;
   cursor:pointer;
+  height: 250px;
 }
 .single-product .product-img a {
   display: block;
   position: relative;
+  height: 100%;
 }
 .single-product .product-img a img {
-  width: 100%;
+  width: 100%;;
 }
 .single-product .product-img a img.hover-img {
   position: absolute;
@@ -3075,6 +3078,7 @@ Version:1.0
 }
 .shop-home-list .single-list .list-image{
 	position:relative;
+	height: 180px;
 }
 .shop-home-list .single-list .list-image.overlay:before{
 	background:#000;

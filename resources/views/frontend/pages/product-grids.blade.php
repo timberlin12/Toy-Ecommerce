@@ -184,7 +184,6 @@
                                     <div class="col-lg-4 col-md-6 col-12">
                                         <div class="single-product">
                                             <div class="product-img">
-x
                                                 <div class="button-head">
                                                     <div class="product-action">
                                                         <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>

@@ -202,14 +202,6 @@
 												<div class="col-lg-4 col-md-6 col-sm-6">
 													<div class="single-product">
 														<div class="product-img">
-															<a href="{{route('product-detail',$product->slug)}}">
-															@if($product->images->isNotEmpty())
-																<img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
-															@else
-																<img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
-															@endif
-															<img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
-															</a>
 															<div class="button-head">
 																<div class="product-action">
 																	<a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>

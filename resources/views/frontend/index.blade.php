@@ -163,6 +163,15 @@
                         <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
                             <div class="single-product">
                                 <div class="product-img">
+                                        <div class="button-head">
+                                            <div class="product-action">
+                                                <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class="ti-eye"></i><span>Quick Shop</span></a>
+                                                <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
+                                            </div>
+                                            <div class="product-action-2">
+                                                <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
+                                            </div>
+                                        </div>
                                     <a href="{{route('product-detail', $product->slug)}}">
                                         @if($product->images->isNotEmpty())
                                             <img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
@@ -180,15 +189,6 @@
                                             <span class="price-dec">{{$product->discount}}% Off</span>
                                         @endif
                                     </a>
-                                        <div class="button-head">
-                                            <div class="product-action">
-                                                <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class="ti-eye"></i><span>Quick Shop</span></a>
-                                                <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Add to Wishlist</span></a>
-                                            </div>
-                                            <div class="product-action-2">
-                                                <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="product-content">
                                         <h3><a href="{{route('product-detail', $product->slug)}}">{{$product->title}}</a></h3>
@@ -256,14 +256,6 @@
                             <!-- Start Single Product -->
                             <div class="single-product">
                                 <div class="product-img">
-                                    <a href="{{route('product-detail', $product->slug)}}">
-                                        @if($product->images->isNotEmpty())
-                                            <img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
-                                        @else
-                                            <img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
-                                        @endif
-                                        <img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
-                                    </a>
                                     <div class="button-head">
                                         <div class="product-action">
                                             <a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
@@ -273,6 +265,14 @@
                                             <a href="{{route('add-to-cart', $product->slug)}}">Add to cart</a>
                                         </div>
                                     </div>
+                                    <a href="{{route('product-detail', $product->slug)}}">
+                                        @if($product->images->isNotEmpty())
+                                            <img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
+                                        @else
+                                            <img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
+                                        @endif
+                                        <img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
+                                    </a>
                                 </div>
                                 <div class="product-content">
                                     <h3><a href="{{route('product-detail', $product->slug)}}">{{$product->title}}</a></h3>
@@ -602,8 +602,6 @@
 @endpush
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <script>
 
@@ -686,6 +684,5 @@
 		// 	$('.owl-item.cloned').hide();
 		// });
     </script>
-@endpush
 
 @endpush

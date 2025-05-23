@@ -474,20 +474,20 @@
                 "  -  "+m_currency + $("#slider-range").slider("values", 1));
             }
         })
-        $(document).ready(function() {
-			$('.modal').on('show.bs.modal', function () {
-				var $slider = $(this).find('.quickview-slider-active');
+        // $(document).ready(function() {
+		// 	$('.modal').on('show.bs.modal', function () {
+		// 		var $slider = $(this).find('.quickview-slider-active');
 
-				// Remove all owl-related classes
-				$slider.removeClass('owl-carousel owl-theme owl-loaded owl-loading');
+		// 		// Remove all owl-related classes
+		// 		$slider.removeClass('owl-carousel owl-theme owl-loaded owl-loading');
 
-				// Remove owl internal structure and unwrap images
-				$slider.find('.owl-stage-outer, .owl-stage, .owl-item, .owl-wrapper-outer, .owl-wrapper').each(function(){
-					$(this).replaceWith($(this).html());
-				});
-			});
-			$('.owl-item.cloned').hide();
-		});
+		// 		// Remove owl internal structure and unwrap images
+		// 		$slider.find('.owl-stage-outer, .owl-stage, .owl-item, .owl-wrapper-outer, .owl-wrapper').each(function(){
+		// 			$(this).replaceWith($(this).html());
+		// 		});
+		// 	});
+		// 	$('.owl-item.cloned').hide();
+		// });
     </script>
 
 <script>

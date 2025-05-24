@@ -386,7 +386,7 @@
                 <div class="single-service">
                     <i class="ti-rocket"></i>
                     <h4>Free shiping</h4>
-                    <p>Orders over40</p>
+                    <p>Orders over 40</p>
                 </div>
                 <!-- End Single Service -->
             </div>
@@ -395,7 +395,7 @@
                 <div class="single-service">
                     <i class="ti-reload"></i>
                     <h4>No Return</h4>
-                    <p>No returns Policy</p>
+                    <p>No return Policy</p>
                 </div>
                 <!-- End Single Service -->
             </div>

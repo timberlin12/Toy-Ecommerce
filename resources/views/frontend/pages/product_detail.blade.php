@@ -331,12 +331,12 @@
                                 <div class="single-product">
                                     <div class="product-img">
 										<a href="{{route('product-detail',$data->slug)}}">
-											@if($product->images->isNotEmpty())
-                                            	<img class="default-img" src="{{$product->images->first()->image_url}}" alt="{{$product->images->first()->image_url}}">
+											@if($data->images->isNotEmpty())
+                                            	<img class="default-img" src="{{$data->images->first()->image_url}}" alt="{{$data->images->first()->image_url}}">
 											@else
 												<img class="default-img" src="https://via.placeholder.com/300" alt="Placeholder">
 											@endif
-											<img class="hover-img" src="{{ $product->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $product->images->first()->image_url ?? 'Placeholder' }}">
+											<img class="hover-img" src="{{ $data->images->first()->image_url ?? 'https://via.placeholder.com/600x370' }}" alt="{{ $data->images->first()->image_url ?? 'Placeholder' }}">
                                             <span class="price-dec">{{$data->discount}} % Off</span>
                                                                     {{-- <span class="out-of-stock">Hot</span> --}}
                                         </a>

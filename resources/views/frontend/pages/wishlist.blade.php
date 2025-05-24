@@ -67,8 +67,8 @@
 	</div>
 	<!--/ End Shopping Cart -->
 			
-	<!-- Start Shop Services Area  -->
-	<section class="shop-services section">
+	<!-- Start Shop Services Area -->
+	<section class="shop-services section home" style="background:#fff">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-12">
@@ -85,7 +85,7 @@
 					<div class="single-service">
 						<i class="ti-reload"></i>
 						<h4>No Return</h4>
-						<p>No return policy</p>
+						<p>No return Policy</p>
 					</div>
 					<!-- End Single Service -->
 				</div>
@@ -110,7 +110,7 @@
 			</div>
 		</div>
 	</section>
-	<!-- End Shop Newsletter -->
+	<!-- End Shop Services Area -->
 	
 	{{-- @include('frontend.layouts.newsletter') --}}
 	

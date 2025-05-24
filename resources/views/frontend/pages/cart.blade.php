@@ -101,13 +101,13 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-5 col-12">
 								<div class="left">
-									<div class="coupon">
+									{{-- <div class="coupon">
 									<form action="{{route('coupon-store')}}" method="POST">
 											@csrf
 											<input name="code" placeholder="Enter Valid Coupon">
 											<button class="btn">Apply Coupon</button>
 										</form>
-									</div>
+									</div> --}}
 									{{-- <div class="checkbox">`
 										@php
 											$shipping=DB::table('shippings')->where('status','active')->limit(1)->get();
@@ -152,7 +152,7 @@
 	<!--/ End Shopping Cart -->
 
 	<!-- Start Shop Services Area  -->
-	<section class="shop-services section">
+	<section class="shop-services section home" style="background:#fff">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-3 col-md-6 col-12">
@@ -197,7 +197,7 @@
 	<!-- End Shop Newsletter -->
 
 	<!-- Start Shop Newsletter  -->
-	@include('frontend.layouts.newsletter')
+	{{-- @include('frontend.layouts.newsletter') --}}
 	<!-- End Shop Newsletter -->
 
 @endsection

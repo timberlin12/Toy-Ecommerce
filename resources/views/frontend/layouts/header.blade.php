@@ -231,7 +231,7 @@
                                             {{-- <li class="{{Request::path()=='contact' ? 'active' : ''}}"><a href="{{route('contact')}}">Contact Us</a></li> --}}
                                             @auth
                                             @if(Auth::user()->role=='admin')
-                                            {{-- <li>
+                                            <li>
                                                 <a href="javascript:void(0);">My Account<i class="ti-angle-down"></i></a>
                                                 <ul class="dropdown border-0 shadow">
                                                     <li> <a href="{{route('admin')}}" target="_blank">Dashboard</a></li>
@@ -245,7 +245,7 @@
                                                     <li> <a href="{{route('user')}}" target="_blank">Dashboard</a></li>
                                                     <li> <a href="{{route('order.track')}}">Track Order</a></li>
                                                 </ul>
-                                            </li> --}}
+                                            </li>
                                             @endif
                                             <li> <a href="{{route('user.logout')}}">Logout</a></li>
 
@@ -286,7 +286,7 @@
                                                             @endphp
                                                             <li>
                                                                 <a href="{{route('wishlist-delete',$data->id)}}" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                                <a class="cart-img" href="#"><img src="{{$photo[0]}}" alt="{{$photo[0]}}"></a>
+                                                                <a class="cart-img" href="#"><img src="{{ asset($data->product->firstImage->image_url) }}" alt="{{ asset($data->product->firstImage->image_url) }}"></a>
                                                                 <h4 style="max-width: 59%;"><a href="{{route('product-detail',$data->product['slug'])}}" target="_blank" style="color: #17a2b8;">{{$data->product['title']}}</a></h4>
                                                                 <p class="quantity">{{$data->quantity}} x - <span class="amount">${{number_format($data->price,2)}}</span></p>
                                                             </li>
@@ -323,7 +323,7 @@
                                                         @endphp
                                                         <li>
                                                             <a href="{{route('cart-delete',$data->id)}}" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                            <a class="cart-img" href="#"><img src="{{$photo[0]}}" alt="{{$photo[0]}}"></a>
+                                                            <a class="cart-img" href="#"><img src="{{ asset($data->product->firstImage->image_url) }}" alt="{{ asset($data->product->firstImage->image_url) }}"></a>
                                                             <h4 style="width: 59.5%;"><a href="{{route('product-detail',$data->product['slug'])}}" target="_blank" style="color: #17a2b8;">{{$data->product['title']}}</a></h4>
                                                             <p class="quantity">{{$data->quantity}} x - <span class="amount">${{number_format($data->price,2)}}</span></p>
                                                         </li>

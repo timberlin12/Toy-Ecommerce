@@ -99,7 +99,7 @@ class Helper{
     public static function getAllProductFromCart($user_id=''){
         if(Auth::check()){
             if($user_id=="") $user_id=auth()->user()->id;
-            return Cart::with('product')->where('user_id',$user_id)->where('order_id',null)->get();
+            return Cart::with('product.firstImage')->where('user_id',$user_id)->where('order_id',null)->get();
         }
         else{
             return 0;
@@ -130,7 +130,7 @@ class Helper{
     public static function getAllProductFromWishlist($user_id=''){
         if(Auth::check()){
             if($user_id=="") $user_id=auth()->user()->id;
-            return Wishlist::with('product')->where('user_id',$user_id)->where('cart_id',null)->get();
+            return Wishlist::with('product.firstImage')->where('user_id',$user_id)->where('cart_id',null)->get();
         }
         else{
             return 0;

@@ -58,7 +58,7 @@
                                                     @endif
                                                     <a href="{{route('wishlist')}}" class="single-icon"><i class="fa fa-heart"></i> <span class="total-count">{{Helper::wishlistCount()}}</span></a>
                                                     <!-- Shopping Item -->
-                                                    @auth
+                                                    {{-- @auth
                                                     <div class="shopping-item">
                                                         <div class="dropdown-cart-header">
                                                             <span>{{count(Helper::getAllProductFromWishlist())}} Items</span>
@@ -86,7 +86,7 @@
                                                             <a href="{{route('cart')}}" class="btn animate">Cart</a>
                                                         </div>
                                                     </div>
-                                                    @endauth
+                                                    @endauth --}}
                                                     <!--/ End Shopping Item -->
                                                 </div>
                                                 {{-- <div class="sinlge-bar">
@@ -95,7 +95,7 @@
                                             <div class="sinlge-bar shopping">
                                                 <a href="{{route('cart')}}" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{Helper::cartCount()}}</span></a>
                                                 <!-- Shopping Item -->
-                                                @auth
+                                                {{-- @auth
                                                 <div class="shopping-item">
                                                     <div class="dropdown-cart-header">
                                                         <span>{{count(Helper::getAllProductFromCart())}} Items</span>
@@ -123,7 +123,7 @@
                                                         <a href="{{route('checkout')}}" class="btn animate">Checkout</a>
                                                     </div>
                                                 </div>
-                                                @endauth
+                                                @endauth --}}
                                                 <!--/ End Shopping Item -->
                                             </div>
                                     </div>

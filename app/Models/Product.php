@@ -81,6 +81,11 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
     }
 
+    public function firstImage()
+    {
+        return $this->hasOne(ProductImage::class)->orderBy('id');
+    }
+
     public static function getAllProduct()
     {
         return Product::with(['images', 'sub_cat_info'])->orderBy('id', 'desc')->paginate(10);

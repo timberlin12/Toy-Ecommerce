@@ -70,7 +70,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-12">
+                                    {{-- <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Country<span>*</span></label>
                                             <select name="country" id="country" required>
@@ -322,7 +322,7 @@
                                                 <option value="ZW">Zimbabwe</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6 col-md-6 col-12">
                                         <div class="form-group">
                                             <label>Address Line 1<span>*</span></label>
@@ -367,7 +367,7 @@
                                                 Shipping Cost
                                                 @if(count(Helper::shipping())>0 && Helper::cartCount()>0)
                                                     <select name="shipping" class="nice-select" required>
-                                                        <option value="">Select your address</option>
+                                                        <option value=""><span>*</span>Select your address</option>
                                                         @foreach(Helper::shipping() as $shipping)
                                                         <option value="{{$shipping->id}}" class="shippingOption" data-price="{{$shipping->price}}">{{$shipping->type}}: {{$shipping->price}}</option>
                                                         @endforeach
@@ -399,30 +399,30 @@
                                 <div class="single-widget">
                                     <h2>Payment Methods</h2>
                                     <div class="content">
-    <div class="checkbox">
-        {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
-        <form-group>
-            <input name="payment_method"  type="radio" value="cod" required> <label> Cash On Delivery</label><br>
-            <!-- <input name="payment_method"  type="radio" value="paypal"> <label> PayPal</label><br> -->
-            <input name="payment_method"  type="radio" value="cardpay" required> <label> Card Payment</label><br>
-            
-            <!-- Credit Card Details -->
-            <div id="creditCardDetails" style="display: none;">
-                <label for="cardNumber">Card Number:</label>
-                <input type="text" id="cardNumber" name="card_number" maxlength="16"><br>
+                                        <div class="checkbox">
+                                            {{-- <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Check Payments</label> --}}
+                                            <form-group>
+                                                <input name="payment_method"  type="radio" value="cod" required> <label> Cash On Delivery</label><br>
+                                                <input name="payment_method"  type="radio" value="razorpay"> <label> Razorpay</label><br>
+                                                <input name="payment_method"  type="radio" value="cardpay" required> <label> Card Payment</label><br>
+                                                
+                                                <!-- Credit Card Details -->
+                                                <div id="creditCardDetails" style="display: none;">
+                                                    <label for="cardNumber">Card Number:</label>
+                                                    <input type="text" id="cardNumber" name="card_number" maxlength="16"><br>
 
-                <label for="cardName">Name on Card:</label>
-                <input type="text" id="cardName" name="card_name"><br>
-                
-                <label for="expirationDate">Expiration Date:</label>
-                <input type="text" id="expirationDate" name="expiration_date" maxlength="5"><br>
-                
-                <label for="cvv">CVV:</label>
-                <input type="text" id="cvv" name="cvv" maxlength="3"><br>
-            </div>
-        </form-group>
-    </div>
-</div>
+                                                    <label for="cardName">Name on Card:</label>
+                                                    <input type="text" id="cardName" name="card_name"><br>
+                                                    
+                                                    <label for="expirationDate">Expiration Date:</label>
+                                                    <input type="text" id="expirationDate" name="expiration_date" maxlength="5"><br>
+                                                    
+                                                    <label for="cvv">CVV:</label>
+                                                    <input type="text" id="cvv" name="cvv" maxlength="3"><br>
+                                                </div>
+                                            </form-group>
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <!--/ End Order Widget -->
@@ -566,7 +566,7 @@
 				let subtotal = parseFloat( $('.order_subtotal').data('price') ); 
 				let coupon = parseFloat( $('.coupon_price').data('price') ) || 0; 
 				// alert(coupon);
-				$('#order_total_price span').text('$'+(subtotal + cost-coupon).toFixed(2));
+				$('#order_total_price span').text((subtotal + cost-coupon).toFixed(2));
 			});
 
 		});

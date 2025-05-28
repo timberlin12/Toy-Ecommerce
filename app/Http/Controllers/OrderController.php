@@ -44,15 +44,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $this->validate($request,[
-            'first_name'=>'string|required',
-            'last_name'=>'string|required',
-            'address1'=>'string|required',
-            'address2'=>'string|nullable',
-            'coupon'=>'nullable|numeric',
-            'phone'=>'numeric|required',
-            'post_code'=>'string|nullable',
-            'email'=>'string|required'
+            'first_name' => 'string|required',
+            'last_name' => 'string|required',
+            'address1' => 'string|required',
+            'address2' => 'string|nullable',
+            'coupon' => 'nullable|numeric',
+            'phone' => 'numeric|required',
+            'post_code' => 'string|nullable',
+            'email' => 'string|required',
+            'country' => 'string|default:India'
         ]);
         // return $request->all();
 
@@ -126,16 +128,17 @@ class OrderController extends Controller
         //     $order_data['payment_method']='cod';
         //     $order_data['payment_status']='Unpaid';
         // }
-        if (request('payment_method') == 'paypal') {
-            $order_data['payment_method'] = 'paypal';
-            $order_data['payment_status'] = 'paid';
+        if (request('payment_method') == 'razorpay') {
+            $order_data['payment_method'] = 'razorpay';
+            $order_data['payment_status'] = 'Unpaid'; // Razorpay confirms after success callback
         } elseif (request('payment_method') == 'cardpay') {
             $order_data['payment_method'] = 'cardpay';
             $order_data['payment_status'] = 'paid';
         } else {
             $order_data['payment_method'] = 'cod';
             $order_data['payment_status'] = 'Unpaid';
-        }        
+        }
+    
         $order->fill($order_data);
         $status=$order->save();
         if($order)
@@ -147,8 +150,8 @@ class OrderController extends Controller
             'fas'=>'fa-file-alt'
         ];
         Notification::send($users, new StatusNotification($details));
-        if(request('payment_method')=='paypal'){
-            return redirect()->route('payment')->with(['id'=>$order->id]);
+        if (request('payment_method') == 'razorpay') {
+            return redirect()->route('razorpay.create.order', ['id' => $order->id]);
         }
         else{
             session()->forget('cart');

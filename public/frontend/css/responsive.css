@@ -885,7 +885,7 @@ Version:1.0
 	width: 50%;
 	height: 100%;
 	border-bottom: 1px solid #e6ebee;
-	background: #F7941D;
+	background: rgb(32, 50, 71);
 	color: #fff;
 	border: none;
 }

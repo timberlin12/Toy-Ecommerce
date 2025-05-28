@@ -86,9 +86,12 @@ Route::resource('/comment','PostCommentController');
 // Coupon
 Route::post('/coupon-store','CouponController@couponStore')->name('coupon-store');
 // Payment
-Route::get('payment', 'PayPalController@payment')->name('payment');
-Route::get('cancel', 'PayPalController@cancel')->name('payment.cancel');
-Route::get('payment/success', 'PayPalController@success')->name('payment.success');
+Route::get('payment', 'RazorpayPaymentController@payment')->name('payment');
+Route::get('razorpay/order/{id}', 'RazorpayPaymentController@createOrder')->name('razorpay.create.order');
+Route::post('payment/success', 'RazorpayPaymentController@success')->name('payment.success');
+Route::get('cancel', 'RazorpayPaymentController@cancel')->name('payment.cancel');
+
+
 
 
 

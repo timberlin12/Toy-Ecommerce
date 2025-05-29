@@ -59,13 +59,13 @@
                                                     <a href="{{route('wishlist')}}" class="single-icon"><i class="fa fa-heart"></i> <span class="total-count">{{Helper::wishlistCount()}}</span></a>
                                                     <!-- Shopping Item -->
                                                     @auth
-                                                    <div class="shopping-item">
+                                                    {{-- <div class="shopping-item">
                                                         <div class="dropdown-cart-header">
                                                             <span>{{count(Helper::getAllProductFromWishlist())}} Items</span>
                                                             <a href="{{route('wishlist')}}">View Wishlist</a>
                                                         </div>
                                                         <ul class="shopping-list">
-                                                            {{-- {{Helper::getAllProductFromCart()}} --}}
+                                                            {{Helper::getAllProductFromCart()}}
                                                             @foreach(Helper::getAllProductFromWishlist() as $data)
                                                             @php
                                                             $photo=explode(',',$data->product['photo']);
@@ -85,7 +85,7 @@
                                                             </div>
                                                             <a href="{{route('cart')}}" class="btn animate">Cart</a>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     @endauth
                                                     <!--/ End Shopping Item -->
                                                 </div>
@@ -96,13 +96,13 @@
                                                 <a href="{{route('cart')}}" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{Helper::cartCount()}}</span></a>
                                                 <!-- Shopping Item -->
                                                 @auth
-                                                <div class="shopping-item">
+                                                {{-- <div class="shopping-item">
                                                     <div class="dropdown-cart-header">
                                                         <span>{{count(Helper::getAllProductFromCart())}} Items</span>
                                                         <a href="{{route('cart')}}">View Cart</a>
                                                     </div>
                                                     <ul class="shopping-list">
-                                                        {{-- {{Helper::getAllProductFromCart()}} --}}
+                                                        {{Helper::getAllProductFromCart()}} 
                                                         @foreach(Helper::getAllProductFromCart() as $data)
                                                         @php
                                                         $photo=explode(',',$data->product['photo']);
@@ -122,7 +122,7 @@
                                                         </div>
                                                         <a href="{{route('checkout')}}" class="btn animate">Checkout</a>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 @endauth
                                                 <!--/ End Shopping Item -->
                                             </div>

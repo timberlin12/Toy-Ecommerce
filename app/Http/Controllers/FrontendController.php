@@ -9,6 +9,7 @@ use App\Models\PostCategory;
 use App\Models\Post;
 use App\Models\Cart;
 use App\Models\Brand;
+use App\Models\Wishlist;
 use App\User;
 use Auth;
 use Session;
@@ -17,6 +18,7 @@ use DB;
 use Hash;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 class FrontendController extends Controller
 {
    
@@ -52,12 +54,22 @@ class FrontendController extends Controller
             ->where('is_parent', 1)
             ->orderBy('title', 'ASC')
             ->get();
+
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
+
         return view('frontend.index')
             ->with('featured', $featured)
             ->with('posts', $posts)
             ->with('banners', $banners)
             ->with('product_lists', $products)
-            ->with('category_lists', $category);
+            ->with('category_lists', $category)
+            ->with('wishlistProductIds', $wishlistProductIds);
     }   
 
     public function aboutUs(){
@@ -119,8 +131,16 @@ class FrontendController extends Controller
         }
         // Sort by name , price, category
 
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
       
-        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
+        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products)
+            ->with('wishlistProductIds', $wishlistProductIds);
     }
     public function productLists(){
         $products=Product::query();
@@ -167,8 +187,16 @@ class FrontendController extends Controller
         }
         // Sort by name , price, category
 
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
       
-        return view('frontend.pages.product-lists')->with('products',$products)->with('recent_products',$recent_products);
+        return view('frontend.pages.product-lists')->with('products',$products)->with('recent_products',$recent_products)
+            ->with('wishlistProductIds', $wishlistProductIds);
     }
     public function productFilter(Request $request){
             $data= $request->all();
@@ -228,17 +256,35 @@ class FrontendController extends Controller
                     ->orwhere('price','like','%'.$request->search.'%')
                     ->orderBy('id','DESC')
                     ->paginate('9');
-        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
+
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
+
+        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
     }
 
     public function productBrand(Request $request){
         $products=Brand::getProductByBrand($request->slug);
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
+
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
+
         if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
+            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
         }
         else{
-            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
+            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
         }
 
     }
@@ -247,11 +293,19 @@ class FrontendController extends Controller
         // return $request->slug;
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
 
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
+
         if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products);
+            return view('frontend.pages.product-grids')->with('products',$products->products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
         }
         else{
-            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products);
+            return view('frontend.pages.product-lists')->with('products',$products->products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
         }
 
     }
@@ -261,11 +315,19 @@ class FrontendController extends Controller
         $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
         // dd($products);
 
+        $wishlistProductIds = [];
+
+        if (Auth::check()) {
+            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
+                ->pluck('product_id')
+                ->toArray();
+        }
+
         if(request()->is('e-shop.loc/product-grids')){
-            return view('frontend.pages.product-grids')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+            return view('frontend.pages.product-grids')->with('products',$products->sub_products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
         }
         else{
-            return view('frontend.pages.product-lists')->with('products',$products->sub_products)->with('recent_products',$recent_products);
+            return view('frontend.pages.product-lists')->with('products',$products->sub_products)->with('recent_products',$recent_products)->with('wishlistProductIds', $wishlistProductIds);
         }
 
     }

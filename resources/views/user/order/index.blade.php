@@ -67,7 +67,7 @@
             @endforeach
           </tbody>
         </table>
-        <span style="float:right">{{$orders->links()}}</span>
+        {{-- <span style="float:right">{{$orders->links()}}</span> --}}
         @else
           <h6 class="text-center">No orders found!!! Please order some products</h6>
         @endif

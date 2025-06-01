@@ -96,6 +96,8 @@
                                 Cash on Delivery
                             @elseif($order->payment_method == 'paypal')
                                 Paypal
+                            @elseif($order->payment_method == 'razorpay')
+                                Razorpay
                             @elseif($order->payment_method == 'cardpay')
                                 Card Payment
                             @endif
@@ -108,6 +110,8 @@
                               <span class="badge badge-success">Paid</span>
                           @elseif($order->payment_status == 'unpaid')
                               <span class="badge badge-danger">Unpaid</span>
+                          @elseif($order->payment_status == 'cancelled')
+                              <span class="badge badge-danger">Cancelled</span>
                           @else
                               {{$order->payment_status}}
                           @endif

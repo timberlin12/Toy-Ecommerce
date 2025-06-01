@@ -64,6 +64,7 @@ return array(
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\ProductImage' => $baseDir . '/app/Models/ProductImage.php',
     'App\\Models\\ProductReview' => $baseDir . '/app/Models/ProductReview.php',
+    'App\\Models\\RazorpayPayment' => $baseDir . '/app/Models/RazorpayPayment.php',
     'App\\Models\\Settings' => $baseDir . '/app/Models/Settings.php',
     'App\\Models\\Shipping' => $baseDir . '/app/Models/Shipping.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',

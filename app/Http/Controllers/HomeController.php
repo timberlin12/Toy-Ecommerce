@@ -55,7 +55,7 @@ class HomeController extends Controller
 
     // Order
     public function orderIndex(){
-        $orders=Order::orderBy('id','DESC')->where('user_id',auth()->user()->id)->paginate(10);
+        $orders=Order::orderBy('id','DESC')->where('user_id',auth()->user()->id)->get();
         return view('user.order.index')->with('orders',$orders);
     }
     public function userOrderDelete($id)

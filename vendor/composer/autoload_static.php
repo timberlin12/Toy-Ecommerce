@@ -707,6 +707,7 @@ class ComposerStaticInit0fe02967618b6ee54572c79b43d09b09
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
         'App\\Models\\ProductImage' => __DIR__ . '/../..' . '/app/Models/ProductImage.php',
         'App\\Models\\ProductReview' => __DIR__ . '/../..' . '/app/Models/ProductReview.php',
+        'App\\Models\\RazorpayPayment' => __DIR__ . '/../..' . '/app/Models/RazorpayPayment.php',
         'App\\Models\\Settings' => __DIR__ . '/../..' . '/app/Models/Settings.php',
         'App\\Models\\Shipping' => __DIR__ . '/../..' . '/app/Models/Shipping.php',
         'App\\Models\\Wishlist' => __DIR__ . '/../..' . '/app/Models/Wishlist.php',

@@ -49,7 +49,7 @@ class Category extends Model
         return $this->hasOne('App\Models\Category','id','parent_id');
     }
     public static function getAllCategory(){
-        return  Category::orderBy('id','DESC')->with('parent_info')->paginate(10);
+        return  Category::orderBy('id','DESC')->with('parent_info')->get();
     }
 
     public static function shiftChild($cat_id){

@@ -88,7 +88,7 @@ class Product extends Model
 
     public static function getAllProduct()
     {
-        return Product::with(['images', 'sub_cat_info'])->orderBy('id', 'desc')->paginate(10);
+        return Product::with(['images', 'sub_cat_info'])->orderBy('id', 'desc')->get();
     }
 
     public function getRelProdsAttribute()

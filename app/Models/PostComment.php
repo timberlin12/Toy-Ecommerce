@@ -46,7 +46,7 @@ class PostComment extends Model
     }
 
     public static function getAllUserComments(){
-        return PostComment::where('user_id',auth()->user()->id)->with('user_info')->paginate(10);
+        return PostComment::where('user_id',auth()->user()->id)->with('user_info')->get();
     }
 
     public function post(){

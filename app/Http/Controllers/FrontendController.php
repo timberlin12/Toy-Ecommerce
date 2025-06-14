@@ -140,8 +140,13 @@ class FrontendController extends Controller
         $wishlistProductIds = [];
 
         if (Auth::check()) {
-            $wishlistProductIds = Wishlist::where('user_id', Auth::id())
-                ->pluck('product_id')
+            $wishlistProductIds = Wishlist::where('wishlists.user_id', Auth::id())
+                ->leftJoin('carts', 'wishlists.cart_id', '=', 'carts.id')
+                ->where(function ($query) {
+                    $query->whereNull('wishlists.cart_id')
+                        ->orWhereNull('carts.order_id');
+                })
+                ->pluck('wishlists.product_id')
                 ->toArray();
         }
       

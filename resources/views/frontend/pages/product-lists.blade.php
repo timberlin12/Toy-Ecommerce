@@ -273,10 +273,6 @@
                                 
                                 <!-- Image Section -->
                                 <div class="col-lg-6 col-md-12" style="background: #f8f9fa; position: relative; min-height: 400px;">
-                                    <!-- Close Button -->
-                                    <button type="button" class="close position-absolute" data-dismiss="modal" aria-label="Close" style="top: 15px; right: 15px; z-index: 20; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; padding: 0; font-size: 20px;">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
 
                                     <!-- Main Image Container -->
                                     <div class="position-relative" style="height: 70%; min-height: 300px; padding: 1rem;">
@@ -346,7 +342,11 @@
                                         <div class="mb-4">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <span class="badge badge-secondary px-3 py-1" style="font-size: 0.75rem;">{{$product->category ?? 'Electronics'}}</span>
-                                                <a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class="{{ in_array($product->id, $wishlistProductIds) ? 'fa fa-heart' : 'ti-heart' }}"></i><span>{{ in_array($product->id, $wishlistProductIds) ? 'Already Added in Wishlist or Cart' : 'Add to Wishlist' }}</span></a>
+                                                
+                                                <!-- Close Button -->
+                                                <button type="button" class="close position-absolute" data-dismiss="modal" aria-label="Close" style="top: 15px; right: 15px; z-index: 20; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; width: 40px; height: 40px; padding: 0; font-size: 20px;">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
                                             <h2 class="h3 font-weight-bold mb-3">{{$product->title}}</h2>
                                             
@@ -399,6 +399,13 @@
                                                 </span>
                                             @endif
                                         </div>
+
+                                        <!-- Total Price -->
+                                        <div class="text-center">
+                                            <span id="totalPrice{{$product->id}}" class="h5 font-weight-semibold text-dark">
+                                                Total: ₹{{number_format($after_discount, 2)}}
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <!-- Add to Cart Section -->
@@ -428,13 +435,6 @@
                                                 <i class="fa fa-shopping-cart mr-2"></i>
                                                 <span>{{$product->stock > 0 ? 'Add to Cart' : 'Out of Stock'}}</span>
                                             </button>
-
-                                            <!-- Total Price -->
-                                            <div class="text-center">
-                                                <span id="totalPrice{{$product->id}}" class="h5 font-weight-semibold text-dark">
-                                                    Total: ₹{{number_format($after_discount, 2)}}
-                                                </span>
-                                            </div>
                                         </form>
                                     </div>
                                 </div>
